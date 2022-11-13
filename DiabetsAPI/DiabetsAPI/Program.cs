@@ -1,13 +1,9 @@
 using DiabetsAPI.DB;
+using DiabetsAPI.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DiabetsAPI
 {
@@ -28,7 +24,8 @@ namespace DiabetsAPI
             {
                 IServiceProvider services = scope.ServiceProvider;
                 DiabetsContext context = services.GetRequiredService<DiabetsContext>();
-                DbInitializer.Initialize(context);
+                IUserService userSerivce = services.GetRequiredService<IUserService>();
+                DbInitializer.Initialize(context, userSerivce);
             }
         }
 
