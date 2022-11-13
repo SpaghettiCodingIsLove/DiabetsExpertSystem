@@ -1,7 +1,9 @@
+using DiabetsAPI.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,12 +27,26 @@ namespace DiabetsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DiabetsContext>(options => options.UseNpgsql("Host=localhost;Database=Diabets;Username=postgres;Password=admin;"));
+
             services.AddControllers();
+
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: "cors", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("cors");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
