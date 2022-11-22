@@ -1,0 +1,16 @@
+<div class="mat-app-background">
+    <h3>Sign In</h3>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Login</mat-label>
+            <input type="login" matInput #userName>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" #userPassword>
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" (click)="login(userName.value, userPassword.value)">Log in</button>
+</div>
