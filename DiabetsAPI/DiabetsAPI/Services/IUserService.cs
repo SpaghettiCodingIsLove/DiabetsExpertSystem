@@ -1,6 +1,7 @@
 ﻿using DiabetsAPI.DB;
 using DiabetsAPI.Models.Requests;
 using DiabetsAPI.Models.Responses;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace DiabetsAPI.Services
@@ -15,5 +16,6 @@ namespace DiabetsAPI.Services
         IEnumerable<PatientResponse> GetPatients();
         void AddExamination(AddExaminationRequest addExaminationRequest);
         IEnumerable<ExaminationResponse> GetExaminations(long patientId);
+        bool ChangePassword(ChangePasswordRequest changePasswordRequest, long id);
     }
 }

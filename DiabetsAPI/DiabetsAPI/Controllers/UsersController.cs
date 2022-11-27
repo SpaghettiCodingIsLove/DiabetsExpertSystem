@@ -60,12 +60,12 @@ namespace DiabetsAPI.Controllers
         {
             if (!Account.IsAdmin)
             {
-                return Unauthorized(new { message = "Unauthorized" });
+                return StatusCode(403, new { message = "Unauthorized" });
             }
 
             if (userService.CreateDoctor(createDoctorRequest) == null)
             {
-                return StatusCode(500);
+                return StatusCode(400);
             }
 
             return Ok();
@@ -77,7 +77,7 @@ namespace DiabetsAPI.Controllers
         {
             if (userService.CreatePatient(createPatientRequest) == null)
             {
-                return StatusCode(500);
+                return StatusCode(400);
             }
 
             return Ok();
@@ -124,8 +124,12 @@ namespace DiabetsAPI.Controllers
 
         [Authorize]
         [HttpPost("change-password")]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
+            if (!userService.ChangePassword(changePasswordRequest, Account.Id))
+            {
+                return StatusCode(400);
+            }
 
             return Ok();
         }

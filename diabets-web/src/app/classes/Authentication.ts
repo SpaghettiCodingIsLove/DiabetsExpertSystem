@@ -12,3 +12,9 @@ export interface User
     token: string;
     isAdmin: boolean;
 }
+
+export interface ChangePassword
+{
+    oldPassword: string;
+    newPassword: string;
+}

@@ -173,5 +173,25 @@ namespace DiabetsAPI.Services
 
             return examinations;
         }
+
+        public bool ChangePassword(ChangePasswordRequest changePasswordRequest, long id)
+        {
+            if (string.IsNullOrWhiteSpace(changePasswordRequest.OldPassword) || string.IsNullOrWhiteSpace(changePasswordRequest.NewPassword))
+            {
+                return false;
+            }
+
+            Doctor user = context.Doctors.Find(id);
+
+            if (user == null || !BC.Verify(changePasswordRequest.OldPassword, user.Password))
+            {
+                return false;
+            }
+
+            user.Password = BC.HashPassword(changePasswordRequest.NewPassword);
+            context.SaveChanges();
+
+            return true;
+        }
     }
 }

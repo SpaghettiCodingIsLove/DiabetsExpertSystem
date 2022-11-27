@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthenticateRequest, User } from '../classes/Authentication';
+import { AuthenticateRequest, ChangePassword, User } from '../classes/Authentication';
 import { Examination } from '../classes/Examination';
 import { Patient } from '../classes/Patient';
 
@@ -50,6 +50,13 @@ export class DiabetsApiService {
 
   public validateToken() {
     return this.http.get<{message: string}>(`${environment.apiUrl}/users/validate-token`, {observe: 'response'});
+  }
+
+  public changePassword(request: ChangePassword) {
+    return this.http.post(`${environment.apiUrl}/users/change-password`, request, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   private setSession(user: User): void {
