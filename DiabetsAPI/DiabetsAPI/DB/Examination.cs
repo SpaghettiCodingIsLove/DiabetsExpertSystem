@@ -1,4 +1,6 @@
-﻿namespace DiabetsAPI.DB;
+﻿using System;
+
+namespace DiabetsAPI.DB;
 
 public partial class Examination
 {
@@ -8,7 +10,7 @@ public partial class Examination
 
     public long PatientId { get; set; }
 
-    public string Date { get; set; }
+    public DateTime Date { get; set; }
 
     public string Measures { get; set; }
 

@@ -82,5 +82,52 @@ namespace DiabetsAPI.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpGet("get-patients")]
+        public IActionResult GetPatients()
+        {
+            return Ok(userService.GetPatients());
+        }
+
+        [Authorize]
+        [HttpGet("get-examinations")]
+        public IActionResult GetExaminations(long patientId)
+        {
+            return Ok(userService.GetExaminations(patientId));
+        }
+
+        [Authorize]
+        [HttpPost("add-examination")]
+        public IActionResult AddExamination(AddExaminationRequest addExaminationRequest)
+        {
+            userService.AddExamination(addExaminationRequest);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("train")]
+        public IActionResult Train()
+        {
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("check-diabets")]
+        public IActionResult CheckDiabets()
+        {
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public IActionResult ChangePassword()
+        {
+
+            return Ok();
+        }
     }
 }
