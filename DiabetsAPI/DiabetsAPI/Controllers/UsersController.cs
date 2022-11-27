@@ -92,7 +92,7 @@ namespace DiabetsAPI.Controllers
 
         [Authorize]
         [HttpGet("get-examinations")]
-        public IActionResult GetExaminations(long patientId)
+        public IActionResult GetExaminations([FromHeader]long patientId)
         {
             return Ok(userService.GetExaminations(patientId));
         }
@@ -127,6 +127,13 @@ namespace DiabetsAPI.Controllers
         public IActionResult ChangePassword()
         {
 
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("validate-token")]
+        public IActionResult ValidateToken()
+        {
             return Ok();
         }
     }

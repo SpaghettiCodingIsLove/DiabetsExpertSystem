@@ -13,8 +13,8 @@ export class LoggedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(localStorage.getItem('id_token') != null) {
-        this.router.navigate(['menu'])
-        return false
+        this.router.navigate(['menu']);
+        return false;
       }
 
       return true;

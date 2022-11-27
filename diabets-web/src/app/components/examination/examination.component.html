@@ -1,0 +1,13 @@
+<div class="mat-app-background">
+    <div>{{patient.name}} {{patient.lastName}} {{patient.birthDate | date:'dd.MM.yyyy'}}</div>
+    <div><span class="name">Examination date: </span><span class="data">{{examination.date | date:'dd.MM.yyyy HH:mm':'locale'}}</span></div>
+    <div><span class="name">Pregnancies: </span><span class="data">{{examination.pregnancies}}</span></div>
+    <div><span class="name">Glucose: </span><span class="data">{{examination.glucose}}</span></div>
+    <div><span class="name">Blood preasure: </span><span class="data">{{examination.bloodPreasure}}</span></div>
+    <div><span class="name">Skin thickess: </span><span class="data">{{examination.skinThickness}}</span></div>
+    <div><span class="name">Insulin: </span><span class="data">{{examination.insulin}}</span></div>
+    <div><span class="name">Weight: </span><span class="data">{{examination.weight}}</span></div>
+    <div><span class="name">Height: </span><span class="data">{{examination.height}}</span></div>
+    <div><span class="name">Diabetes pedigree function: </span><span class="data">{{examination.diabetesPedigreeFunction}}</span></div>
+    <div><span class="name">Outcome: </span><span class="data">{{examination.outcome}}</span></div>
+</div>

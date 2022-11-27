@@ -1,0 +1,9 @@
+<div class="mat-app-background">
+    <div>{{patient.name}} {{patient.lastName}} {{patient.birthDate | date:'dd.MM.yyyy'}}</div>
+    <button style="margin:10px" mat-raised-button color="primary" (click)="addExamination()">New examination</button>
+    <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let examination of examinations" (click)="openExamination(examination)">
+          {{examination.date | date:'dd.MM.yyyy HH:mm':'locale'}} 
+        </mat-list-option>
+    </mat-selection-list>
+</div>

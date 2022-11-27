@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,9 @@ import { AddDoctorComponent } from './components/add-doctor/add-doctor.component
 import { TrainComponent } from './components/train/train.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { AdminGuard } from './admin.guard';
+import { PatientComponent } from './components/patient/patient.component';
+import { ExaminationComponent } from './components/examination/examination.component';
+import { AddExaminationComponent } from './components/add-examination/add-examination.component';
 
 
 @NgModule({
@@ -31,7 +35,10 @@ import { AdminGuard } from './admin.guard';
     AddPatientComponent,
     AddDoctorComponent,
     TrainComponent,
-    PatientsComponent
+    PatientsComponent,
+    PatientComponent,
+    ExaminationComponent,
+    AddExaminationComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +48,7 @@ import { AdminGuard } from './admin.guard';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
