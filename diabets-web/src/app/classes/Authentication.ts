@@ -18,3 +18,12 @@ export interface ChangePassword
     oldPassword: string;
     newPassword: string;
 }
+
+export interface AddDoctorRequest
+{
+    name: string;
+    lastName: string;
+    login: string;
+    password: string;
+    isAdmin: boolean;
+}

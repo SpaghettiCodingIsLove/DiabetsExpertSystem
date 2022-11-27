@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthenticateRequest, ChangePassword, User } from '../classes/Authentication';
+import { AddDoctorRequest, AuthenticateRequest, ChangePassword, User } from '../classes/Authentication';
 import { Examination } from '../classes/Examination';
 import { AddPatientRequest, Patient } from '../classes/Patient';
 
@@ -61,6 +61,13 @@ export class DiabetsApiService {
 
   public addPatient(request: AddPatientRequest): Observable<Patient> {
     return this.http.post<Patient>(`${environment.apiUrl}/users/create-patient`, request, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public addDoctor(request: AddDoctorRequest) {
+    return this.http.post(`${environment.apiUrl}/users/create-doctor`, request, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
