@@ -10,7 +10,7 @@ namespace DiabetsAPI.Services
     {
         AuthenticateResponse Authenticate(AuthenticateRequest authenticateRequest);
         Doctor CreateDoctor(CreateDoctorRequest createDoctorRequest);
-        Patient CreatePatient(CreatePatientRequest createPatientRequest);
+        PatientResponse CreatePatient(CreatePatientRequest createPatientRequest);
         void DeleteDoctor(int id);
         void DeletePatient(int id);
         IEnumerable<PatientResponse> GetPatients();

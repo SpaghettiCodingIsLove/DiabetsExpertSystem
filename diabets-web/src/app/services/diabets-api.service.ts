@@ -5,7 +5,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticateRequest, ChangePassword, User } from '../classes/Authentication';
 import { Examination } from '../classes/Examination';
-import { Patient } from '../classes/Patient';
+import { AddPatientRequest, Patient } from '../classes/Patient';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,13 @@ export class DiabetsApiService {
 
   public changePassword(request: ChangePassword) {
     return this.http.post(`${environment.apiUrl}/users/change-password`, request, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  public addPatient(request: AddPatientRequest): Observable<Patient> {
+    return this.http.post<Patient>(`${environment.apiUrl}/users/create-patient`, request, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );

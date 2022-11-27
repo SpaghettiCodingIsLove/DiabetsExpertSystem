@@ -75,12 +75,14 @@ namespace DiabetsAPI.Controllers
         [HttpPost("create-patient")]
         public IActionResult CreatePatient(CreatePatientRequest createPatientRequest)
         {
-            if (userService.CreatePatient(createPatientRequest) == null)
+            PatientResponse patient = userService.CreatePatient(createPatientRequest);
+
+            if (patient == null)
             {
                 return StatusCode(400);
             }
 
-            return Ok();
+            return Ok(patient);
         }
 
         [Authorize]

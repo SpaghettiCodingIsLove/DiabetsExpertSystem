@@ -65,7 +65,7 @@ namespace DiabetsAPI.Services
             return doctor;
         }
 
-        public Patient CreatePatient(CreatePatientRequest createPatientRequest)
+        public PatientResponse CreatePatient(CreatePatientRequest createPatientRequest)
         {
             if (string.IsNullOrWhiteSpace(createPatientRequest.Pesel))
             {
@@ -77,7 +77,10 @@ namespace DiabetsAPI.Services
                 return null;
             }
 
-            Patient patient = mapper.Map<Patient>(createPatientRequest);
+            Patient patient = new Patient()
+            {
+                BirthDate = DateOnly.FromDateTime(createPatientRequest.BirthDate)
+            };
 
             patient.Pesel = cryptoService.Encrypt(createPatientRequest.Pesel);
             patient.Name = cryptoService.Encrypt(createPatientRequest.Name);
@@ -86,7 +89,14 @@ namespace DiabetsAPI.Services
             context.Patients.Add(patient);
             context.SaveChanges();
 
-            return patient;
+            return new PatientResponse()
+                    {
+                        Id = patient.Id,
+                        Name = createPatientRequest.Name,
+                        LastName = createPatientRequest.LastName,
+                        BirthDate = createPatientRequest.BirthDate,
+                        Pesel = createPatientRequest.Pesel
+                    };
         }
 
         public void DeleteDoctor(int id)

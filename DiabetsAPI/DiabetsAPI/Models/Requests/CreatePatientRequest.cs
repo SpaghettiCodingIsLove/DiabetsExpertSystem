@@ -10,6 +10,6 @@ namespace DiabetsAPI.Models.Requests
 
         public string Pesel { get; set; }
 
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }
