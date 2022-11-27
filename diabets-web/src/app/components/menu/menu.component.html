@@ -1,3 +1,8 @@
 <div class="mat-app-background">
+    <button mat-raised-button color="primary" (click)="navigate('change-password')">Change password</button>
+    <button mat-raised-button color="primary" (click)="navigate('add-patient')">Add patient</button>
+    <button mat-raised-button *ngIf="isAdmin" color="primary" (click)="navigate('add-doctor')">Add doctor</button>
+    <button mat-raised-button *ngIf="isAdmin" color="primary" (click)="navigate('train')">Train system</button>
+    <button mat-raised-button color="primary" (click)="navigate('patients')">Patients</button>
     <button mat-raised-button color="primary" (click)="logout()">Log out</button>
 </div>

@@ -29,6 +29,7 @@ export class DiabetsApiService {
     localStorage.setItem('id', user.id);
     localStorage.setItem('name', user.name);
     localStorage.setItem('last_name', user.lastName);
+    localStorage.setItem('isAdmin', String(user.isAdmin));
   } 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

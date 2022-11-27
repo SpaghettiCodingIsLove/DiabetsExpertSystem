@@ -6,8 +6,9 @@ export interface AuthenticateRequest
 
 export interface User
 {
-    id: string
-    name: string
-    lastName: string
-    token: string
+    id: string;
+    name: string;
+    lastName: string;
+    token: string;
+    isAdmin: boolean;
 }

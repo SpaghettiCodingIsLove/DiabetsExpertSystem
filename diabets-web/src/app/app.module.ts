@@ -14,13 +14,24 @@ import { MenuComponent } from './components/menu/menu.component';
 import { JwtInterceptor } from './jwt.interceptor';
 import { AuthGuard } from './auth.guard';
 import { LoggedGuard } from './logged.guard';
+import { PasswordComponent } from './components/password/password.component';
+import { AddPatientComponent } from './components/add-patient/add-patient.component';
+import { AddDoctorComponent } from './components/add-doctor/add-doctor.component';
+import { TrainComponent } from './components/train/train.component';
+import { PatientsComponent } from './components/patients/patients.component';
+import { AdminGuard } from './admin.guard';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    PasswordComponent,
+    AddPatientComponent,
+    AddDoctorComponent,
+    TrainComponent,
+    PatientsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +45,8 @@ import { LoggedGuard } from './logged.guard';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AuthGuard,
-    LoggedGuard
+    LoggedGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })
