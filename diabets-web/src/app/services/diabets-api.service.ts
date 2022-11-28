@@ -4,9 +4,8 @@ import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddDoctorRequest, AuthenticateRequest, ChangePassword, User } from '../classes/Authentication';
-import { AddExaminationRequest, Examination } from '../classes/Examination';
+import { Examination } from '../classes/Examination';
 import { AddPatientRequest, Patient } from '../classes/Patient';
-import { TrainingResponse } from '../classes/Train';
 
 @Injectable({
   providedIn: 'root'
@@ -69,20 +68,6 @@ export class DiabetsApiService {
 
   public addDoctor(request: AddDoctorRequest) {
     return this.http.post(`${environment.apiUrl}/users/create-doctor`, request, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  public train(data: string) {
-    return this.http.post<TrainingResponse>(`${environment.apiUrl}/users/train`, { dataSet: data }, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  public classify(request: AddExaminationRequest) {
-    return this.http.post<Examination>(`${environment.apiUrl}/users/add-examination`, request, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );

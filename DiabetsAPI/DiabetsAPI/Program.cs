@@ -24,7 +24,8 @@ namespace DiabetsAPI
             {
                 IServiceProvider services = scope.ServiceProvider;
                 DiabetsContext context = services.GetRequiredService<DiabetsContext>();
-                DbInitializer.Initialize(context);
+                IUserService userSerivce = services.GetRequiredService<IUserService>();
+                DbInitializer.Initialize(context, userSerivce);
             }
         }
 

@@ -1,17 +1,1 @@
-<div class="mat-app-background">
-    <div *ngIf="!loading">
-        <div *ngIf="!trained">
-            <h3>Train system</h3>
-            <div>
-                <label>Load train data: </label>
-                <input id="input-file" type="file" name="file" (change)="fileChanged($event)" accept="text/*"/>
-            </div>
-            <button mat-raised-button color="primary" style="margin-top: 20px;" (click)="train()">Train</button>
-        </div>
-        <div *ngIf="trained">
-            <h3>Score</h3>
-            {{score}}
-        </div>
-    </div>
-    <mat-spinner *ngIf="loading"></mat-spinner>
-</div>
+<p>train works!</p>

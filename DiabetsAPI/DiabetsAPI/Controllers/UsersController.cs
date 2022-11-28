@@ -103,19 +103,25 @@ namespace DiabetsAPI.Controllers
         [HttpPost("add-examination")]
         public IActionResult AddExamination(AddExaminationRequest addExaminationRequest)
         {
-            return Ok(userService.AddExamination(addExaminationRequest));
+            userService.AddExamination(addExaminationRequest);
+
+            return Ok();
         }
 
         [Authorize]
         [HttpPost("train")]
-        public IActionResult Train(TrainingRequest trainingRequest)
+        public IActionResult Train()
         {
-            if (!Account.IsAdmin)
-            {
-                return StatusCode(403, new { message = "Unauthorized" });
-            }
 
-            return Ok(userService.Train(trainingRequest));
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("check-diabets")]
+        public IActionResult CheckDiabets()
+        {
+
+            return Ok();
         }
 
         [Authorize]

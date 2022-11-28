@@ -12,5 +12,6 @@
         public double Weight { get; set; }
         public double Height { get; set; }
         public double DiabetesPedigreeFunction { get; set; }
+        public int Outcome { get; set; }
     }
 }

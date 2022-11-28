@@ -5,12 +5,9 @@ using DiabetsAPI.Models.Responses;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using BC = BCrypt.Net.BCrypt;
-using File = System.IO.File;
 
 namespace DiabetsAPI.Services
 {
@@ -92,10 +89,14 @@ namespace DiabetsAPI.Services
             context.Patients.Add(patient);
             context.SaveChanges();
 
-            PatientResponse patientResponse = mapper.Map<PatientResponse>(createPatientRequest);
-            patientResponse.Id = patient.Id;
-
-            return patientResponse;
+            return new PatientResponse()
+                    {
+                        Id = patient.Id,
+                        Name = createPatientRequest.Name,
+                        LastName = createPatientRequest.LastName,
+                        BirthDate = createPatientRequest.BirthDate,
+                        Pesel = createPatientRequest.Pesel
+                    };
         }
 
         public void DeleteDoctor(int id)
@@ -131,7 +132,7 @@ namespace DiabetsAPI.Services
                     Id = patient.Id,
                     Name = cryptoService.Decrypt(patient.Name),
                     LastName = cryptoService.Decrypt(patient.LastName),
-                    BirthDate = patient.BirthDate.ToDateTime(new TimeOnly(0)),
+                    BirthDate = patient.BirthDate.ToDateTime(new System.TimeOnly(0)),
                     Pesel = cryptoService.Decrypt(patient.Pesel)
                 };
 
@@ -141,43 +142,18 @@ namespace DiabetsAPI.Services
             return patients;
         }
 
-        public ExaminationResponse AddExamination(AddExaminationRequest addExaminationRequest)
+        public void AddExamination(AddExaminationRequest addExaminationRequest)
         {
-            Patient patient = context.Patients.Find(addExaminationRequest.PatientId);
-            int age = (int)((DateTime.UtcNow - patient.BirthDate.ToDateTime(new TimeOnly(0))).TotalDays / 365.255);
-
-            double bmi = addExaminationRequest.Weight / Math.Pow(addExaminationRequest.Height / 100, 2);
-            string patientData = $"{addExaminationRequest.Pregnancies},{addExaminationRequest.Glucose},{addExaminationRequest.BloodPreasure},{addExaminationRequest.SkinThickness},{addExaminationRequest.Insulin},{bmi.ToString(CultureInfo.InvariantCulture)},{addExaminationRequest.DiabetesPedigreeFunction.ToString(CultureInfo.InvariantCulture)},{age}";
-
-            DirectoryInfo directory = new DirectoryInfo("model");
-            FileInfo myFile = directory.GetFiles()
-                .OrderByDescending(x => x.LastWriteTime)
-                .First();
-
-            string cmdCommand;
-#if DEBUG
-            cmdCommand = $"python classify.py \"{myFile.FullName}\" \"{patientData}\"";
-#else
-            cmdCommand = $"classify.exe \"{myFile.FullName}\" \"{patientData}\"";
-#endif
-            int outcom = (int)double.Parse(RunCmd(cmdCommand).Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
-
             Examination examination = new Examination()
             {
                 DoctorId = addExaminationRequest.DoctorId,
                 PatientId = addExaminationRequest.PatientId,
                 Date = DateTime.UtcNow,
-                Measures = cryptoService.Encrypt($"{addExaminationRequest.Pregnancies};{addExaminationRequest.Glucose};{addExaminationRequest.BloodPreasure};{addExaminationRequest.SkinThickness};{addExaminationRequest.Insulin};{addExaminationRequest.Weight.ToString(CultureInfo.InvariantCulture)};{addExaminationRequest.Height.ToString(CultureInfo.InvariantCulture)};{addExaminationRequest.DiabetesPedigreeFunction.ToString(CultureInfo.InvariantCulture)};{outcom}")
+                Measures = cryptoService.Encrypt($"{addExaminationRequest.Pregnancies};{addExaminationRequest.Glucose};{addExaminationRequest.BloodPreasure};{addExaminationRequest.SkinThickness};{addExaminationRequest.Insulin};{addExaminationRequest.Weight.ToString(CultureInfo.InvariantCulture)};{addExaminationRequest.Height.ToString(CultureInfo.InvariantCulture)};{addExaminationRequest.DiabetesPedigreeFunction.ToString(CultureInfo.InvariantCulture)};{addExaminationRequest.Outcome};")
             };
 
             context.Examinations.Add(examination);
             context.SaveChanges();
-
-            ExaminationResponse examinationResponse = mapper.Map<ExaminationResponse>(addExaminationRequest);
-            examinationResponse.Outcome = outcom;
-            examinationResponse.Date = examination.Date;
-
-            return examinationResponse;
         }
 
         public IEnumerable<ExaminationResponse> GetExaminations(long patientId)
@@ -226,65 +202,6 @@ namespace DiabetsAPI.Services
             context.SaveChanges();
 
             return true;
-        }
-
-        public TrainingResponse Train(TrainingRequest trainingRequest)
-        {
-            if (!Directory.Exists("tmp"))
-            {
-                Directory.CreateDirectory("tmp");
-            }
-
-            if (!Directory.Exists("model"))
-            {
-                Directory.CreateDirectory("model");
-            }
-
-            string currTime = DateTime.UtcNow.ToString("dd_MM_yyyy_HH_mm_ss");
-            string tmpFile = @$"tmp\{currTime}.csv";
-            File.WriteAllText(tmpFile, trainingRequest.DataSet);
-
-            string cmdCommand;
-#if DEBUG
-            cmdCommand = $"python train.py  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
-#else
-            cmdCommand = $"train.exe  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
-#endif
-
-            double score = double.Parse(RunCmd(cmdCommand));
-
-            File.Delete(tmpFile);
-
-            TrainingResponse trainingResponse = new TrainingResponse()
-            {
-                Score = score
-            };
-
-            return trainingResponse;
-        }
-
-        private string RunCmd(string command)
-        {
-            using (Process process = new Process())
-            {
-                ProcessStartInfo processStartInfo = new ProcessStartInfo()
-                {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    FileName = "cmd.exe",
-                    Arguments = $"/C {command}",
-                    UseShellExecute = false,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true
-                };
-
-                process.StartInfo = processStartInfo;
-
-                process.Start();
-
-                process.WaitForExit(5000);
-
-                return process.StandardOutput.ReadToEnd(); ;
-            }
         }
     }
 }

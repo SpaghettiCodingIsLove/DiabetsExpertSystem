@@ -1,14 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DiabetsAPI.Models.Requests;
+using DiabetsAPI.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiabetsAPI.DB
 {
     public static class DbInitializer
     {
-        public static void Initialize(DiabetsContext context)
+        public static void Initialize(DiabetsContext context, IUserService userSerivce)
         {
             if (context.Database.EnsureCreated())
             {
-                context.Doctors.Add(new Doctor()
+                userSerivce.CreateDoctor(new CreateDoctorRequest()
                 {
                     Name = "admin",
                     LastName = "admin",

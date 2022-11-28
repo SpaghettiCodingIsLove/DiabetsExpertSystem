@@ -12,8 +12,6 @@ namespace DiabetsAPI.Helpers
             CreateMap<CreateDoctorRequest, Doctor>();
             CreateMap<CreatePatientRequest, Patient>();
             CreateMap<Doctor, AuthenticateResponse>();
-            CreateMap<AddExaminationRequest, ExaminationResponse>();
-            CreateMap<CreatePatientRequest, PatientResponse>();
         }
     }
 }

@@ -396,8 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-
-*.py
-*.sav
-*.exe
