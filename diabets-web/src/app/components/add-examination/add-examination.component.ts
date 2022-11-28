@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AddExaminationRequest } from 'src/app/classes/Examination';
 import { Patient } from 'src/app/classes/Patient';
 import { DiabetsApiService } from 'src/app/services/diabets-api.service';
 
@@ -10,6 +11,7 @@ import { DiabetsApiService } from 'src/app/services/diabets-api.service';
 })
 export class AddExaminationComponent implements OnInit {
   public patient: Patient;
+  public loading: boolean = false;
 
   constructor(private apiService: DiabetsApiService, private router: Router) {
     this.patient = this.router.getCurrentNavigation()?.extras?.state?.['patient'];
@@ -20,6 +22,29 @@ export class AddExaminationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public classify(pregnanices: string, glucose: string, bloodPreasure: string, skinThickness: string, insulin: string, weight: string, height: string, pedigree: string) {
+    this.loading = true;
+
+    let request: AddExaminationRequest = {
+      doctorId: localStorage.getItem("id") ?? "",
+      patientId: this.patient.id,
+      pregnancies: pregnanices,
+      glucose: glucose,
+      bloodPreasure: bloodPreasure,
+      skinThickness: skinThickness,
+      insulin: insulin,
+      weight: weight,
+      height: height,
+      diabetesPedigreeFunction: pedigree,
+    };
+
+    this.apiService.classify(request) 
+      .subscribe(x => {
+        this.router.navigate(['examination'], { state: { patient: this.patient, examination: x } });
+        this.loading = false;
+      });
   }
 
 }

@@ -25,7 +25,7 @@ namespace DiabetsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DiabetsContext>(options => options.UseNpgsql("Host=localhost;Database=Diabets;Username=postgres;Password=admin;"));
+            services.AddDbContext<DiabetsContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DBConnection")));
 
             services.AddControllers();
 
