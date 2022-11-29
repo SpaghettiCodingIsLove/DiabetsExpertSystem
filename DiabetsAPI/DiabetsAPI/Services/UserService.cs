@@ -98,23 +98,25 @@ namespace DiabetsAPI.Services
             return patientResponse;
         }
 
-        public void DeleteDoctor(int id)
+        public void DeleteDoctor(long id)
         {
             Doctor user = context.Doctors.Find(id);
 
             if (user != null)
             {
+                context.Examinations.RemoveRange(context.Examinations.Where(x => x.DoctorId == id));
                 context.Doctors.Remove(user);
                 context.SaveChanges();
             }
         }
 
-        public void DeletePatient(int id)
+        public void DeletePatient(long id)
         {
             Patient user = context.Patients.Find(id);
 
             if (user != null)
             {
+                context.Examinations.RemoveRange(context.Examinations.Where(x => x.PatientId == id));
                 context.Patients.Remove(user);
                 context.SaveChanges();
             }

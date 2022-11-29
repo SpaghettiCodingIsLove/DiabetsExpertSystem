@@ -11,8 +11,8 @@ namespace DiabetsAPI.Services
         AuthenticateResponse Authenticate(AuthenticateRequest authenticateRequest);
         Doctor CreateDoctor(CreateDoctorRequest createDoctorRequest);
         PatientResponse CreatePatient(CreatePatientRequest createPatientRequest);
-        void DeleteDoctor(int id);
-        void DeletePatient(int id);
+        void DeleteDoctor(long id);
+        void DeletePatient(long id);
         IEnumerable<PatientResponse> GetPatients();
         ExaminationResponse AddExamination(AddExaminationRequest addExaminationRequest);
         IEnumerable<ExaminationResponse> GetExaminations(long patientId);
