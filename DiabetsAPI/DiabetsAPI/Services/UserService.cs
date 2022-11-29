@@ -248,12 +248,12 @@ namespace DiabetsAPI.Services
 
             string cmdCommand;
 #if DEBUG
-            cmdCommand = $"python train.py  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
+            cmdCommand = $"python train.py \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
 #else
-            cmdCommand = $"train.exe  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
+            cmdCommand = $"train.exe \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
 #endif
 
-            double score = double.Parse(RunCmd(cmdCommand));
+            double score = double.Parse(RunCmd(cmdCommand).Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
 
             File.Delete(tmpFile);
 
@@ -283,7 +283,7 @@ namespace DiabetsAPI.Services
 
                 process.Start();
 
-                process.WaitForExit(5000);
+                process.WaitForExit(20000);
 
                 return process.StandardOutput.ReadToEnd(); ;
             }

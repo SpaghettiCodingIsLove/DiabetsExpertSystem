@@ -7,3 +7,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.mat-app-title {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    margin-top: 28px;
+}
+
+button {
+    margin-top: 50px;
+    font-size: 24px;
+    padding: 10px 25px;
+}
+
+.patient{
+    font-size: 24px;
+}

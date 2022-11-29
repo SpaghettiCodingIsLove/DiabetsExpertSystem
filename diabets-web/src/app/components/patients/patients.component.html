@@ -1,6 +1,6 @@
 <div class="mat-app-background">
     <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let patient of patients" (click)="redirect(patient)">
+        <mat-list-option style="font-size:20px" *ngFor="let patient of patients" (click)="redirect(patient)">
           {{patient.name + " " + patient.lastName + " " + patient.pesel}} 
         </mat-list-option>
       </mat-selection-list>

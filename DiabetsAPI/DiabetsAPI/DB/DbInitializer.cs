@@ -13,9 +13,11 @@ namespace DiabetsAPI.DB
                     Name = "admin",
                     LastName = "admin",
                     Login = "admin",
-                    Password = "admin",
+                    Password = BCrypt.Net.BCrypt.HashPassword("admin"),
                     IsAdmin = true
                 });
+
+                context.SaveChanges();
             }
             else
             {
