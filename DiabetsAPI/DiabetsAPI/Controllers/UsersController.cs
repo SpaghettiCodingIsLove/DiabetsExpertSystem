@@ -110,6 +110,11 @@ namespace DiabetsAPI.Controllers
         [HttpPost("train")]
         public IActionResult Train(TrainingRequest trainingRequest)
         {
+            if (!Account.IsAdmin)
+            {
+                return StatusCode(403, new { message = "Unauthorized" });
+            }
+
             return Ok(userService.Train(trainingRequest));
         }
 
