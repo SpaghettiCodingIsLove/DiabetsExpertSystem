@@ -103,25 +103,14 @@ namespace DiabetsAPI.Controllers
         [HttpPost("add-examination")]
         public IActionResult AddExamination(AddExaminationRequest addExaminationRequest)
         {
-            userService.AddExamination(addExaminationRequest);
-
-            return Ok();
+            return Ok(userService.AddExamination(addExaminationRequest));
         }
 
         [Authorize]
         [HttpPost("train")]
-        public IActionResult Train()
+        public IActionResult Train(TrainingRequest trainingRequest)
         {
-
-            return Ok();
-        }
-
-        [Authorize]
-        [HttpPost("check-diabets")]
-        public IActionResult CheckDiabets()
-        {
-
-            return Ok();
+            return Ok(userService.Train(trainingRequest));
         }
 
         [Authorize]

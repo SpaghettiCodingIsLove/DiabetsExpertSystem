@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Examination } from 'src/app/classes/Examination';
 import { Patient } from 'src/app/classes/Patient';
@@ -20,6 +20,11 @@ export class PatientComponent implements OnInit {
     if (this.patient == undefined){
       this.router.navigate(['menu']);
     }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: Event) {
+    location.reload()
   }
 
   ngOnInit(): void {

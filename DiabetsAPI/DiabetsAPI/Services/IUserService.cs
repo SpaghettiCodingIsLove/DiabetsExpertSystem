@@ -14,8 +14,9 @@ namespace DiabetsAPI.Services
         void DeleteDoctor(int id);
         void DeletePatient(int id);
         IEnumerable<PatientResponse> GetPatients();
-        void AddExamination(AddExaminationRequest addExaminationRequest);
+        ExaminationResponse AddExamination(AddExaminationRequest addExaminationRequest);
         IEnumerable<ExaminationResponse> GetExaminations(long patientId);
         bool ChangePassword(ChangePasswordRequest changePasswordRequest, long id);
+        TrainingResponse Train(TrainingRequest trainingRequest);
     }
 }

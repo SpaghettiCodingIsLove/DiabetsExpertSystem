@@ -1,1 +1,52 @@
-<p>add-examination works!</p>
+<div class="mat-app-background">
+    <h3>Add examination</h3>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Pregnancies</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #pregnancies>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Glucose</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #glucose>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>BloodPreasure</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #bloodPreasure>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>SkinThickness</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #skinThickness>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Insulin</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #insulin>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Weight</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #weight>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Height</mat-label>
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput #height>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>DiabetesPedigreeFunction</mat-label>
+            <input type="number" min="0" matInput #pedigree>
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" (click)="classify(pregnancies.value, glucose.value, bloodPreasure.value, skinThickness.value, insulin.value, weight.value, height.value, pedigree.value)">Add</button>
+</div>
