@@ -10,6 +10,7 @@ export class TrainComponent implements OnInit {
   public trained: boolean = false;
   public score: number = 0;
   public file?: Blob;
+  public loading: boolean = false;
 
   constructor(private apiService: DiabetsApiService) { }
 
@@ -21,13 +22,15 @@ export class TrainComponent implements OnInit {
   }
 
   public train() {
+    this.loading = true;
+
     let fileReader = new FileReader();
 
     fileReader.onload = (e) => {
       if (fileReader.result !== null)
       {
         this.apiService.train(fileReader.result as string)
-          .subscribe(x => { this.score = x.score; this.trained = true });
+          .subscribe(x => { this.score = x.score; this.trained = true; this.loading = false });
       }
     }
 

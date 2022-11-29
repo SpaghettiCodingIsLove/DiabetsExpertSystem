@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using BC = BCrypt.Net.BCrypt;
+using File = System.IO.File;
 
 namespace DiabetsAPI.Services
 {
@@ -153,7 +154,13 @@ namespace DiabetsAPI.Services
                 .OrderByDescending(x => x.LastWriteTime)
                 .First();
 
-            int outcom = (int)double.Parse(RunCmd($"python classify.py \"{myFile.FullName}\" \"{patientData}\"").Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
+            string cmdCommand;
+#if DEBUG
+            cmdCommand = $"python classify.py \"{myFile.FullName}\" \"{patientData}\"";
+#else
+            cmdCommand = $"classify.exe \"{myFile.FullName}\" \"{patientData}\"";
+#endif
+            int outcom = (int)double.Parse(RunCmd(cmdCommand).Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
 
             Examination examination = new Examination()
             {
@@ -237,7 +244,14 @@ namespace DiabetsAPI.Services
             string tmpFile = @$"tmp\{currTime}.csv";
             File.WriteAllText(tmpFile, trainingRequest.DataSet);
 
-            double score = double.Parse(RunCmd($"python train.py  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\""));
+            string cmdCommand;
+#if DEBUG
+            cmdCommand = $"python train.py  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
+#else
+            cmdCommand = $"train.exe  \"{tmpFile}\" \"{@$"model\{currTime}.sav"}\"";
+#endif
+
+            double score = double.Parse(RunCmd(cmdCommand));
 
             File.Delete(tmpFile);
 

@@ -11,6 +11,7 @@ import { DiabetsApiService } from 'src/app/services/diabets-api.service';
 })
 export class AddExaminationComponent implements OnInit {
   public patient: Patient;
+  public loading: boolean = false;
 
   constructor(private apiService: DiabetsApiService, private router: Router) {
     this.patient = this.router.getCurrentNavigation()?.extras?.state?.['patient'];
@@ -24,6 +25,8 @@ export class AddExaminationComponent implements OnInit {
   }
 
   public classify(pregnanices: string, glucose: string, bloodPreasure: string, skinThickness: string, insulin: string, weight: string, height: string, pedigree: string) {
+    this.loading = true;
+
     let request: AddExaminationRequest = {
       doctorId: localStorage.getItem("id") ?? "",
       patientId: this.patient.id,
@@ -37,9 +40,10 @@ export class AddExaminationComponent implements OnInit {
       diabetesPedigreeFunction: pedigree,
     };
 
-    this.apiService.classify(request)
+    this.apiService.classify(request) 
       .subscribe(x => {
         this.router.navigate(['examination'], { state: { patient: this.patient, examination: x } });
+        this.loading = false;
       });
   }
 
